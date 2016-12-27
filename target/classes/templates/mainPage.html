@@ -1,0 +1,58 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml11-thymeleaf-spring4-2.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="../../css/style.css"
+              th:href="@{/css/style.css}"
+              rel="stylesheet" media="screen" />
+
+    </head>
+    <body> 
+        <h1>
+            <span>Welcome!</span>
+            <div>
+                <span id="waiting-message"> Waiting for player</span>
+                <span id="ongoing-message" style="display:none">Game started</span>
+                <span id="game-over-message" style="display:none">Game over</span>
+            </div>
+        </h1>
+        <form action="/" method="POST" id="board" th:object="${board}" >
+            <ul class="top">
+                <li>    
+                    <div class="bigpit">
+                        <input id="player2BigPit" type="button" th:value="*{bigPitPlayer2.numberOfStones}" disabled="disabled"/>
+                    </div>               
+                </li>
+                <li th:each="i : ${#numbers.sequence(5,0,-1)}">
+                    <div class="pit">
+                        <input th:id="'player2_pit' + ${i}" type="button" th:value="*{pitsPlayer2[__${i}__].numberOfStones}" 
+                               disabled="disabled" th:onclick="'submitBoard('+${i}+')'"/>
+                    </div>
+                </li>
+            </ul>   
+            <ul class="bottom">     
+                <li th:each="i : ${#numbers.sequence(0,5)}">
+                    <div class="pit">
+                        <input th:id="'player1_pit' + ${i}"  type="button" th:value="*{pitsPlayer1[__${i}__].numberOfStones}" 
+                               disabled="disabled"  th:onclick="'submitBoard('+${i}+')'"/>
+                    </div>
+                </li>
+                <li>
+                    <div class="bigpit">
+                        <input id="player1BigPit" type="button" th:value="*{bigPitPlayer1.numberOfStones}"  disabled="disabled"/>
+                    </div>
+                </li>   
+            </ul> 
+            <a href="/" class="button">Restart</a>
+            <span th:if="${message}" th:text="${message}"></span>   
+            <input id="httpSessionId" type="hidden" th:value="${sessionId}"/>
+        </form>
+        <script src="http://cdn.jsdelivr.net/webjars/jquery/3.1.0/jquery.min.js"
+        th:src="@{/webjars/jquery/3.1.0/jquery.min.js}"></script> 
+        <script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
+        <script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
+        <script src="../../static/js/mainPage.js" th:src="@{/js/mainPage.js}"></script>
+    </body>  
+</html>

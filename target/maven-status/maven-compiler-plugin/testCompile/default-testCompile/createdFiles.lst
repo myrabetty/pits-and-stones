@@ -1,0 +1,7 @@
+com\game\components\BoardTest.class
+com\game\components\HashingUtilityTest.class
+com\game\components\MiniPitTest.class
+com\game\components\GameTest.class
+com\game\components\PitCoordinatesTest.class
+com\game\PitsAndStonesApplicationTests.class
+com\game\components\BigPitTest.class
